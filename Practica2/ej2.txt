@@ -1,0 +1,3 @@
+Para obtener el codigo de salida de un programa podemos emplear dos métodos:
+*Usar el comando echo $? para mostrar el valor de retorno del programa (en formato decimal)
+*USar el GDB para correr el programa y al final de la ejecución se muestra el código de salida (en formato octal)
