@@ -11,7 +11,7 @@ typedef struct {
 
 int noValido(numero k) { return k.exponente == 0xffff; }
 
-numero nuevo(int signo, int exponente, int mantisa){
+numero nuevo(int signo, int exponente, int mantisa) {
   numero num;
   num.signo = signo;
   num.exponente = exponente;
@@ -37,54 +37,52 @@ numero suma(numero a, numero b) {
   if (noValido(a) || noValido(b)) {
     printf("No se puede calcular la suma");
     return Nan();
-  }
-  else{
-    if(a.exponente > b.exponente){ //Subo el exponente de b y hago operaciones
-        int corrimiento = a.exponente - b.exponente;
-        b.mantisa = b.mantisa >> 1;
-        int mascara = 0x20000;
-        b.mantisa = b.mantisa | masacara;
-        corrimiento--;
-        b.mantisa = b.mantisa >> corrimiento;
-        int mantisa = a.mantisa + b.mantisa;
-        //TODO: chequear lo del signo
-        if (a.signo == b.signo){
-          numero num = nuevo(a.signo, a.exponente, mantisa);
-        }
-    }
-    else{
-      if(a.exponente < b.exponente){
+  } else {
+    if (a.exponente >
+        b.exponente) {  // Subo el exponente de b y hago operaciones
+      int corrimiento = a.exponente - b.exponente;
+      b.mantisa = b.mantisa >> 1;
+      int mascara = 0x20000;
+      b.mantisa = b.mantisa | mascara;
+      corrimiento--;
+      b.mantisa = b.mantisa >> corrimiento;
+      int mantisa = a.mantisa + b.mantisa;
+      // TODO: chequear lo del signo
+      if (a.signo == b.signo) {
+        numero num = nuevo(a.signo, a.exponente, mantisa);
+      }
+    } else {
+      if (a.exponente < b.exponente) {
         int corrimiento = b.exponente - a.exponente;
         a.mantisa = a.mantisa >> 1;
         int mascara = 0x20000;
-        a.mantisa = a.mantisa | masacara;
+        a.mantisa = a.mantisa | mascara;
         corrimiento--;
         a.mantisa = a.mantisa >> corrimiento;
         int mantisa = a.mantisa + b.mantisa;
-        //TODO: chequear lo del signo
-        if (a.signo == b.signo){
+        // TODO: chequear lo del signo
+        if (a.signo == b.signo) {
+          numero num = nuevo(b.signo, b.exponente, mantisa);
+        }
+      } else {
+        // Exponentes iguales
+        int mantisa = a.mantisa + b.mantisa;
+        mantisa = mantisa >> 1;
+        // TODO: chequear lo del signo
+        if (a.signo == b.signo) {
           numero num = nuevo(b.signo, b.exponente, mantisa);
         }
       }
-      else{
-        //Exponentes iguales
-        int mantisa = a.mantisa + b.mantisa;
-        mantisa = mantisa >> 1;
-        //TODO: chequear lo del signo
-        if (a.signo == b.signo){
-          numero num = nuevo(b.signo, b.exponente, mantisa);
-      }
+      return;
     }
-    return;
   }
 }
 
-num producto(numero a, numero b){
+numero producto(numero a, numero b) {
   if (noValido(a) || noValido(b)) {
     printf("No se puede calcular el produto");
     return Nan();
-  }
-  else{
+  } else {
     int exponente = a.exponente + b.exponente;
   }
 }
