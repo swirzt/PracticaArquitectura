@@ -38,6 +38,7 @@ numero suma(numero a, numero b) {
     printf("No se puede calcular la suma");
     return Nan();
   } else {
+    numero num;
     if (a.exponente >
         b.exponente) {  // Subo el exponente de b y hago operaciones
       int corrimiento = a.exponente - b.exponente;
@@ -49,7 +50,7 @@ numero suma(numero a, numero b) {
       int mantisa = a.mantisa + b.mantisa;
       // TODO: chequear lo del signo
       if (a.signo == b.signo) {
-        numero num = nuevo(a.signo, a.exponente, mantisa);
+        num = nuevo(a.signo, a.exponente, mantisa);
       }
     } else {
       if (a.exponente < b.exponente) {
@@ -62,7 +63,7 @@ numero suma(numero a, numero b) {
         int mantisa = a.mantisa + b.mantisa;
         // TODO: chequear lo del signo
         if (a.signo == b.signo) {
-          numero num = nuevo(b.signo, b.exponente, mantisa);
+          num = nuevo(b.signo, b.exponente, mantisa);
         }
       } else {
         // Exponentes iguales
@@ -70,10 +71,10 @@ numero suma(numero a, numero b) {
         mantisa = mantisa >> 1;
         // TODO: chequear lo del signo
         if (a.signo == b.signo) {
-          numero num = nuevo(b.signo, b.exponente, mantisa);
+          num = nuevo(b.signo, b.exponente, mantisa);
         }
       }
-      return;
+      return num;
     }
   }
 }
@@ -87,4 +88,15 @@ numero producto(numero a, numero b) {
   }
 }
 
-int main() { return 0; }
+int main() {
+  numero num1, num2;
+  num1.signo = 0;
+  num1.exponente = 48;
+  num1.mantisa = 5 << 15;  // numero dado
+  num2.signo = 0;
+  num2.exponente = 48;
+  num2.mantisa = 3 << 16;  // 1.75
+  numero resultado = suma(num1, num2);
+  printf("%d%d%d\n", resultado.signo, resultado.exponente, resultado.mantisa);
+  return 0;
+}
