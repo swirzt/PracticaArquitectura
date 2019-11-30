@@ -34,7 +34,6 @@ numero Nan() {
   return cero;
 }
 
-//TODO: TESTEAR SI PONE BIEN EL SIGNO
 numero suma(numero a, numero b) {
   if (noValido(a) || noValido(b)) {
     printf("No se puede calcular la suma");
@@ -77,10 +76,27 @@ numero suma(numero a, numero b) {
 
 numero producto(numero a, numero b) {
   if (noValido(a) || noValido(b)) {
-    printf("No se puede calcular el produto");
+    printf("No se puede calcular el producto");
     return Nan();
   } else {
-    int exponente = a.exponente + b.exponente;
+    numero num;
+
+    num = nuevo(a.signo ^ b.signo, a.exponente + b.exponente - 30000, 0);
+
+    a.mantisa >>= 1;
+    b.mantisa >>= 1;
+
+    a.mantisa |= (1 << 17);
+    b.mantisa |= (1 << 17);
+
+    num.mantisa = (unsigned long long) a.mantisa * b.mantisa >> 18;
+
+    for (int i = 17; (i > 0 && ((num.mantisa & (1 << 17)) == 0)); i--) {
+      num.mantisa <<= 1;
+    }
+    num.mantisa <<= 1;
+
+    return num; 
   }
 }
 
@@ -93,6 +109,8 @@ int main() {
   num2.exponente = 48;
   num2.mantisa = 3 << 16;  // 1.75
   numero resultado = suma(num1, num2);
+  printf("%d%d%d\n", resultado.signo, resultado.exponente, resultado.mantisa);
+  resultado = producto(num1, num2);
   printf("%d%d%d\n", resultado.signo, resultado.exponente, resultado.mantisa);
   return 0;
 }
