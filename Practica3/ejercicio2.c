@@ -38,5 +38,5 @@ int main(void) {
   return 0;
 }
 
-//INFINITY no es NaN
-//Sumar un número a INFINITY mantiene su estado de no NaN
+// INFINITY no es NaN
+// Sumar un número a INFINITY mantiene su estado de no NaN

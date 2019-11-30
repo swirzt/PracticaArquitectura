@@ -40,7 +40,8 @@ numero suma(numero a, numero b) {
     return Nan();
   } else {
     numero num;
-    if (a.exponente > b.exponente) {  // Subo el exponente de b y hago operaciones
+    if (a.exponente >
+        b.exponente) {  // Subo el exponente de b y hago operaciones
       int corrimiento = a.exponente - b.exponente;
       b.mantisa = b.mantisa >> 1;
       int mascara = 0x20000;
@@ -89,14 +90,14 @@ numero producto(numero a, numero b) {
     a.mantisa |= (1 << 17);
     b.mantisa |= (1 << 17);
 
-    num.mantisa = (unsigned long long) a.mantisa * b.mantisa >> 18;
+    num.mantisa = (unsigned long long)a.mantisa * b.mantisa >> 18;
 
     for (int i = 17; (i > 0 && ((num.mantisa & (1 << 17)) == 0)); i--) {
       num.mantisa <<= 1;
     }
     num.mantisa <<= 1;
 
-    return num; 
+    return num;
   }
 }
 
@@ -109,8 +110,8 @@ int main() {
   num2.exponente = 48;
   num2.mantisa = 3 << 16;  // 1.75
   numero resultado = suma(num1, num2);
-  printf("%d%d%d\n", resultado.signo, resultado.exponente, resultado.mantisa);
+  printf("%x%x%x\n", resultado.signo, resultado.exponente, resultado.mantisa);
   resultado = producto(num1, num2);
-  printf("%d%d%d\n", resultado.signo, resultado.exponente, resultado.mantisa);
+  printf("%x%x%x\n", resultado.signo, resultado.exponente, resultado.mantisa);
   return 0;
 }
